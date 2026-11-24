@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Order</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            display: flex;
+            color: #333;
+        }
+
+        .sidebar {
+            width: 230px;
+            min-height: 100vh;
+            background: #202b46;
+            padding: 25px 15px;
+            color: white;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 13px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .sidebar a:hover {
+            background: #394968;
+        }
+
+        .main {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .form-box {
+            background: white;
+            max-width: 650px;
+            margin: 20px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 25px;
+            background: #615af6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #4942d6;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #615af6;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>E-Commerce</h2>
+
+        <a href="{{ url_for('home') }}">Dashboard</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('inventory') }}">Inventory</a>
+        <a href="{{ url_for('customers') }}">Customers</a>
+        <a href="{{ url_for('orders') }}">Orders</a>
+        <a href="{{ url_for('revenue') }}">Revenue & Payments</a>
+    </div>
+
+    <div class="main">
+
+        <a href="{{ url_for('orders') }}" class="back">
+            ← Back to Orders
+        </a>
+
+        <div class="form-box">
+
+            <h1>Add New Order</h1>
+
+            <form method="POST">
+
+                <label>Select Customer</label>
+                <select name="customer_id" required>
+                    <option value="">Choose Customer</option>
+
+                    {% for customer in customers %}
+                    <option value="{{ customer.customer_id }}">
+                        {{ customer.first_name }} {{ customer.last_name }}
+                    </option>
+                    {% endfor %}
+
+                </select>
+
+                <label>Select Product</label>
+                <select name="product_id" required>
+                    <option value="">Choose Product</option>
+
+                    {% for product in products %}
+                    <option value="{{ product.product_id }}">
+                        {{ product.product_name }}
+                        - ₹{{ product.price }}
+                        (Stock: {{ product.quantity_available }})
+                    </option>
+                    {% endfor %}
+
+                </select>
+
+                <label>Quantity</label>
+                <input
+                    type="number"
+                    name="quantity"
+                    min="1"
+                    required
+                    placeholder="Enter quantity"
+                >
+
+                <label>Shipping Address</label>
+                <input
+                    type="text"
+                    name="shipping_address"
+                    required
+                    placeholder="Enter delivery address"
+                >
+
+                <button type="submit">Place Order</button>
+
+            </form>
+
+        </div>
+    </div>
+
+</body>
+</html>

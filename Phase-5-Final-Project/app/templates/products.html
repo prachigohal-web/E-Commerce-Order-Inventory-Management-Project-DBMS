@@ -1,0 +1,105 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>ShopAdmin</h2>
+    <p class="sidebar-subtitle">Management System</p>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Dashboard</a>
+        <a href="{{ url_for('products') }}" class="active">Products</a>
+        <a href="{{ url_for('inventory') }}">Inventory</a>
+        <a href="{{ url_for('customers') }}">Customers</a>
+        <a href="{{ url_for('orders') }}">Orders</a>
+        <a href="{{ url_for('revenue') }}">Revenue & Payments</a>
+    </nav>
+
+    <div class="sidebar-footer">
+        E-Commerce Management
+    </div>
+</div>
+
+<div class="main-content">
+
+    <header>
+        <div>
+            <h1>Products Management</h1>
+            <p>Manage your store products</p>
+        </div>
+        <a href="{{ url_for('add_product') }}" class="action-btn">+ Add Product</a>
+    </header>
+
+    <section class="table-section">
+        <div class="section-heading">
+            <h2>All Products</h2>
+            <a href="/" class="back-link">Back to Dashboard</a>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product Name</th>
+                        <th>Category ID</th>
+                        <th>SKU</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.product_id }}</td>
+                        <td>{{ product.product_name }}</td>
+                        <td>{{ product.category_id }}</td>
+                        <td>{{ product.sku }}</td>
+                        <td>₹{{ product.price }}</td>
+                        <td>{{ product.status }}</td>
+                        <td>
+                            <a href="{{ url_for('edit_product', product_id=product.product_id) }}">Edit</a>
+
+                            {% if product.status == 'ACTIVE' %}
+                            <form method="POST"
+                                  action="{{ url_for('delete_product', product_id=product.product_id) }}"
+                                  style="display:inline;"
+                                  onsubmit="return confirm('Deactivate this product?');">
+
+                                <button type="submit" class="action-btn">Deactivate</button>
+                            </form>
+                            {% else %}
+<form method="POST"
+      action="{{ url_for('activate_product', product_id=product.product_id) }}"
+      style="display:inline;"
+      onsubmit="return confirm('Activate this product?');">
+
+    <button type="submit" class="action-btn">Activate</button>
+</form>
+{% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="empty-message">No products found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>

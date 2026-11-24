@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inventory Management</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <h2>ShopAdmin</h2>
+        <p class="sidebar-subtitle">Management System</p>
+
+        
+<div class="sidebar">
+
+    <h2>ShopAdmin</h2>
+
+    <p class="sidebar-subtitle">Management System</p>
+
+    <nav>
+
+        <a href="{{ url_for('home') }}">Dashboard</a>
+
+        <a href="{{ url_for('products') }}">Products</a>
+
+        <a href="{{ url_for('inventory') }}" class="active">Inventory</a>
+
+        <a href="{{ url_for('customers') }}">Customers</a>
+
+        <a href="{{ url_for('orders') }}">Orders</a>
+
+        <a href="{{ url_for('revenue') }}">Revenue & Payments</a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        E-Commerce Management
+    </div>
+
+</div>
+
+
+        
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main-content">
+
+        <header>
+
+            <div>
+                <h1>Inventory Management</h1>
+                <p>Monitor product stock and reorder levels</p>
+            </div>
+
+            <div class="admin-profile">
+                <span>Administrator</span>
+                <div class="avatar">A</div>
+            </div>
+
+        </header>
+
+
+        <section class="table-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>All Inventory Records</h2>
+                    <p>View and manage available product stock</p>
+                </div>
+
+                <span class="table-label">
+                    Inventory Overview
+                </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Inventory ID</th>
+                            <th>Product Name</th>
+                            <th>Available Quantity</th>
+                            <th>Reorder Level</th>
+                            <th>Last Updated</th>
+                            <th>Stock Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for item in inventory %}
+
+                        <tr>
+
+                            <td>
+                                #{{ item.inventory_id }}
+                            </td>
+
+                            <td>
+                                <strong>{{ item.product_name }}</strong>
+                            </td>
+
+                            <td>
+                                {{ item.quantity_available }}
+                            </td>
+
+                            <td>
+                                {{ item.reorder_level }}
+                            </td>
+
+                            <td>
+                                {{ item.last_updated }}
+                            </td>
+
+                            <td>
+
+                                {% if item.quantity_available <= item.reorder_level %}
+
+                                <span class="status failed">
+                                    Low Stock
+                                </span>
+
+                                {% else %}
+
+                                <span class="status paid">
+                                    In Stock
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- STOCK UPDATE ACTION -->
+
+                            <td>
+
+                                <details class="stock-menu">
+
+                                    <summary class="stock-btn">
+                                        Update Stock
+                                    </summary>
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for('update_inventory_stock', inventory_id=item.inventory_id) }}"
+                                        class="stock-form"
+                                    >
+
+                                        <label>Update Type</label>
+
+                                        <select name="action" required>
+
+                                            <option value="ADD">
+                                                Add Stock
+                                            </option>
+
+                                            <option value="SET">
+                                                Set Stock
+                                            </option>
+
+                                        </select>
+
+
+                                        <label>Quantity</label>
+
+                                        <input
+                                            type="number"
+                                            name="quantity"
+                                            min="0"
+                                            placeholder="Enter quantity"
+                                            required
+                                        >
+
+                                        <button type="submit" class="stock-submit">
+                                            Save Stock
+                                        </button>
+
+                                    </form>
+
+                                </details>
+
+                            </td>
+
+                        </tr>
+
+
+                        {% else %}
+
+                        <tr>
+
+                            <td colspan="7" class="empty-message">
+                                No inventory records found.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <footer>
+            E-Commerce Order & Inventory Management System
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
+
+

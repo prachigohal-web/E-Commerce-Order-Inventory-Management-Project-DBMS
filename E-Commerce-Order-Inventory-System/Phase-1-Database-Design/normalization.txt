@@ -1,0 +1,138 @@
+﻿PROJECT: E-Commerce Order & Inventory Management System
+PHASE 1: DATABASE NORMALIZATION
+
+========================================
+1. FIRST NORMAL FORM (1NF)
+========================================
+
+Rules:
+1. Each table must have a primary key.
+2. Every column must contain atomic values.
+3. No repeating groups or multiple values in a cell.
+
+Example:
+
+Before 1NF:
+
+Order_ID | Customer | Products
+101      | Rahul    | Laptop, Mouse
+102      | Priya    | Keyboard, Monitor
+
+Problem:
+The Products column contains multiple values.
+
+After 1NF:
+
+Order_ID | Customer | Product
+101      | Rahul    | Laptop
+101      | Rahul    | Mouse
+102      | Priya    | Keyboard
+102      | Priya    | Monitor
+
+Solution:
+Products are stored separately in Order_Items.
+Each row contains atomic values.
+
+========================================
+2. SECOND NORMAL FORM (2NF)
+========================================
+
+Rules:
+1. The table must satisfy 1NF.
+2. No partial dependency should exist.
+3. Every non-key attribute must depend on the
+   complete candidate key.
+
+Example:
+
+Consider Order_Items with composite key:
+(order_id, product_id)
+
+Functional dependencies:
+
+(order_id, product_id) -> quantity
+(order_id, product_id) -> unit_price
+
+But:
+
+product_id -> product_name
+product_id -> category_id
+
+Product details depend only on product_id,
+not on the complete composite key.
+
+Solution:
+Product details are stored in Products table.
+Order-specific details are stored in Order_Items.
+
+This removes partial dependency.
+
+========================================
+3. THIRD NORMAL FORM (3NF)
+========================================
+
+Rules:
+1. The table must satisfy 2NF.
+2. No transitive dependency should exist.
+3. Non-key attributes must depend directly
+   on the candidate key.
+
+Example:
+
+If category_name is stored inside Products:
+
+product_id -> category_id
+category_id -> category_name
+
+Therefore:
+product_id -> category_name
+
+This creates a transitive dependency.
+
+Solution:
+Category details are stored separately in
+Categories table.
+
+Products stores only category_id as a foreign key.
+
+========================================
+4. FINAL NORMALIZED TABLES
+========================================
+
+1. Customers
+2. Categories
+3. Products
+4. Suppliers
+5. Supplier_Products
+6. Inventory
+7. Orders
+8. Order_Items
+9. Payments
+10. Shipments
+11. Stock_Transactions
+
+All tables are designed to satisfy 3NF.
+
+Important constraints:
+- Every table has a primary key.
+- Foreign keys maintain referential integrity.
+- Supplier_Products has a UNIQUE constraint
+  on (supplier_id, product_id).
+- Inventory has a UNIQUE constraint on product_id.
+- Order_Items stores individual product details
+  for each order.
+
+========================================
+5. BENEFITS OF NORMALIZATION
+========================================
+
+1. Reduces data redundancy.
+2. Prevents insertion anomalies.
+3. Prevents update anomalies.
+4. Prevents deletion anomalies.
+5. Improves data consistency.
+6. Maintains referential integrity.
+
+========================================
+END OF NORMALIZATION
+========================================

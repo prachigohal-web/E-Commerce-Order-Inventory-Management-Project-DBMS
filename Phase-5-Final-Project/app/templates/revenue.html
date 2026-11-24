@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue & Payments</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>ShopAdmin</h2>
+    <p class="sidebar-subtitle">Management System</p>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Dashboard</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('inventory') }}">Inventory</a>
+        <a href="{{ url_for('customers') }}">Customers</a>
+        <a href="{{ url_for('orders') }}">Orders</a>
+        <a href="{{ url_for('revenue') }}" class="active">
+            Revenue & Payments
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        E-Commerce Management
+    </div>
+</div>
+
+
+<div class="main-content">
+
+    <header>
+        <div>
+            <h1>Revenue & Payments</h1>
+            <p>Monitor store revenue and payment records</p>
+        </div>
+
+        <a href="/" class="back-link">Back to Dashboard</a>
+    </header>
+
+
+    <!-- REVENUE CARDS -->
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon green">₹</div>
+            <p>Total Revenue</p>
+
+            <h2>₹{{ "%.2f"|format(total_revenue) }}</h2>
+
+            <small>From successful payments</small>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon blue">P</div>
+            <p>Total Payments</p>
+
+            <h2>{{ total_payments }}</h2>
+
+            <small>All payment records</small>
+        </div>
+
+    </section>
+
+
+    <!-- PAYMENT HISTORY -->
+
+    <section class="table-section">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>Payment History</h2>
+                <p>All recorded customer payments</p>
+            </div>
+
+
+           <!-- UPDATE PAYMENT BUTTON AND DROPDOWN -->
+
+<div class="payment-update-container">
+
+    <button type="button"
+            class="payment-toggle-btn"
+            onclick="togglePaymentForm()">
+        Update Payment
+        <span>▼</span>
+    </button>
+
+    <form method="POST"
+          class="payment-update-form"
+          id="paymentUpdateForm"
+          style="display: none;">
+
+        <select name="payment_id"
+                class="payment-status-select"
+                required>
+
+            <option value="">Select Payment ID</option>
+
+            {% for payment in payments %}
+            <option value="{{ payment.payment_id }}">
+                Payment #{{ payment.payment_id }}
+            </option>
+            {% endfor %}
+
+        </select>
+
+        <select name="payment_status"
+                class="payment-status-select"
+                required>
+
+            <option value="">Select Status</option>
+            <option value="PAID">PAID</option>
+            <option value="PENDING">PENDING</option>
+            <option value="FAILED">FAILED</option>
+            <option value="REFUNDED">REFUNDED</option>
+
+        </select>
+
+        <button type="submit"
+                class="payment-update-btn"
+                onclick="this.form.action='/payments/update-status/' + this.form.payment_id.value;">
+            Update Status
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+function togglePaymentForm() {
+    const form = document.getElementById("paymentUpdateForm");
+
+    if (form.style.display === "none") {
+        form.style.display = "flex";
+    } else {
+        form.style.display = "none";
+    }
+}
+</script>
+
+        </div>
+
+
+        <!-- PAYMENT TABLE -->
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Payment ID</th>
+                        <th>Order ID</th>
+                        <th>Payment Date</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    {% for payment in payments %}
+
+                    <tr>
+
+                        <td>{{ payment.payment_id }}</td>
+
+                        <td>{{ payment.order_id }}</td>
+
+                        <td>{{ payment.payment_date }}</td>
+
+                        <td>{{ payment.payment_method }}</td>
+
+                        <td>
+                            <span class="status {{ payment.payment_status|lower }}">
+                                {{ payment.payment_status }}
+                            </span>
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(payment.amount) }}
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="6" class="empty-message">
+                            No payment records available.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+</html>

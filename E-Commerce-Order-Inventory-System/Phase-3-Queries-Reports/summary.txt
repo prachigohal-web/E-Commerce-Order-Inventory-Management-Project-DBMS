@@ -1,0 +1,29 @@
+E-COMMERCE ORDER & INVENTORY MANAGEMENT SYSTEM
+PHASE 3: QUERY & REPORT DEVELOPMENT
+
+1. SQL REPORTS
+Five SQL reports were developed:
+- Customer Order Details
+- Best Selling Products
+- Current Inventory Report
+- Payment Summary
+- Customer-wise Spending
+
+2. DATABASE INDEXING
+Four indexes were created:
+- idx_orders_status_date
+- idx_payments_status_date
+- idx_stock_product_date
+- idx_inventory_quantity
+
+3. QUERY OPTIMIZATION
+EXPLAIN command was used to analyze four queries:
+- Orders
+- Payments
+- Stock Transactions
+- Inventory
+
+4. CONCLUSION
+Phase 3 successfully implemented SQL reports,
+database indexes and query execution plan analysis.
+All queries were executed using MySQL Workbench.

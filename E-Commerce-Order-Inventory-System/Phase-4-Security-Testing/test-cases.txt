@@ -1,0 +1,57 @@
+E-COMMERCE ORDER & INVENTORY MANAGEMENT SYSTEM
+PHASE 4: SECURITY AND TESTING
+
+1. VALID TEST CASES
+
+TC01: Add a new customer using AddNewCustomer.
+Expected: Customer should be inserted successfully.
+
+TC02: Insert an order item with valid quantity and price.
+Expected: Record should be inserted successfully.
+
+TC03: Update order status to PROCESSING.
+Expected: Order status should be updated.
+
+TC04: Execute COMMIT transaction.
+Expected: Inventory update and stock transaction should be saved.
+
+2. INVALID TEST CASES
+
+TC05: Insert order item with quantity 0.
+Expected: Trigger should reject the insertion.
+
+TC06: Insert order item with negative quantity.
+Expected: Trigger should reject the insertion.
+
+TC07: Insert order item with unit_price 0.
+Expected: Trigger should reject the insertion.
+
+TC08: Add a customer using an existing email.
+Expected: Duplicate email should be rejected.
+
+3. BOUNDARY TEST CASES
+
+TC09: Insert order item with quantity 1.
+Expected: Record should be accepted.
+
+TC10: Update inventory quantity by 0.
+Expected: Existing quantity should remain unchanged.
+
+TC11: Execute ROLLBACK after an inventory update.
+Expected: Original inventory quantity should be restored.
+
+4. SECURITY TEST CASES
+
+TC12: Admin role permissions.
+Expected: Admin should have full database privileges.
+
+TC13: Manager role permissions.
+Expected: Manager should have assigned read and update permissions.
+
+TC14: Customer role permissions.
+Expected: Customer should have read-only access to categories,
+products and inventory.
+
+CONCLUSION:
+Security, transaction management and database validation
+test cases have been documented.

@@ -1,0 +1,126 @@
+
+PROJECT: E-Commerce Order & Inventory Management System
+
+PHASE 1: RELATIONSHIPS AND CARDINALITIES
+
+========================================
+1. CUSTOMER - ORDERS
+========================================
+Relationship: One-to-Many (1:M)
+
+One customer can place multiple orders.
+Each order belongs to exactly one customer.
+
+PK: Customers.customer_id
+FK: Orders.customer_id
+
+========================================
+2. CATEGORY - PRODUCTS
+========================================
+Relationship: One-to-Many (1:M)
+
+One category can contain multiple products.
+Each product belongs to one category.
+
+PK: Categories.category_id
+FK: Products.category_id
+
+========================================
+3. SUPPLIERS - SUPPLIER_PRODUCTS
+========================================
+Relationship: One-to-Many (1:M)
+
+One supplier can supply multiple products.
+Each supplier-product record belongs to one supplier.
+
+PK: Suppliers.supplier_id
+FK: Supplier_Products.supplier_id
+
+========================================
+4. PRODUCTS - SUPPLIER_PRODUCTS
+========================================
+Relationship: One-to-Many (1:M)
+
+One product can be supplied by multiple suppliers.
+Each supplier-product record refers to one product.
+
+PK: Products.product_id
+FK: Supplier_Products.product_id
+
+Combined Relationship:
+Suppliers and Products have Many-to-Many (M:N)
+through Supplier_Products.
+
+========================================
+5. PRODUCTS - INVENTORY
+========================================
+Relationship: One-to-One (1:1)
+
+Each product has one inventory record.
+Each inventory record belongs to one product.
+
+PK: Products.product_id
+FK: Inventory.product_id (UNIQUE)
+
+========================================
+6. ORDERS - ORDER_ITEMS
+========================================
+Relationship: One-to-Many (1:M)
+
+One order can contain multiple order items.
+Each order item belongs to exactly one order.
+
+PK: Orders.order_id
+FK: Order_Items.order_id
+
+========================================
+7. PRODUCTS - ORDER_ITEMS
+========================================
+Relationship: One-to-Many (1:M)
+
+One product can appear in multiple order items.
+Each order item refers to one product.
+
+PK: Products.product_id
+FK: Order_Items.product_id
+
+Combined Relationship:
+Orders and Products have Many-to-Many (M:N)
+through Order_Items.
+
+========================================
+8. ORDERS - PAYMENTS
+========================================
+Relationship: One-to-Many (1:M)
+
+One order can have multiple payment records.
+Each payment belongs to exactly one order.
+
+PK: Orders.order_id
+FK: Payments.order_id
+
+========================================
+9. ORDERS - SHIPMENTS
+========================================
+Relationship: One-to-Many (1:M)
+
+One order can have multiple shipments.
+Each shipment belongs to exactly one order.
+
+PK: Orders.order_id
+FK: Shipments.order_id
+
+========================================
+10. PRODUCTS - STOCK_TRANSACTIONS
+========================================
+Relationship: One-to-Many (1:M)
+
+One product can have multiple stock transactions.
+Each stock transaction refers to one product.
+
+PK: Products.product_id
+FK: Stock_Transactions.product_id
+
+========================================
+END OF RELATIONSHIPS
+========================================

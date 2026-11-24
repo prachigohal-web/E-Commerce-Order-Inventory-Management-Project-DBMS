@@ -1,0 +1,117 @@
+
+PROJECT: E-Commerce Order & Inventory Management System
+
+DATABASE: ecommerce_db
+
+========================================
+1. CUSTOMERS
+========================================
+customer_id (PK)
+first_name
+last_name
+email
+phone
+address
+city
+state
+postal_code
+created_at
+
+========================================
+2. CATEGORIES
+========================================
+category_id (PK)
+category_name
+description
+
+========================================
+3. PRODUCTS
+========================================
+product_id (PK)
+category_id (FK)
+product_name
+description
+price
+sku
+status
+created_at
+
+========================================
+4. SUPPLIERS
+========================================
+supplier_id (PK)
+supplier_name
+email
+phone
+address
+city
+created_at
+
+========================================
+5. SUPPLIER_PRODUCTS
+========================================
+supplier_product_id (PK)
+supplier_id (FK)
+product_id (FK)
+supply_price
+lead_time_days
+
+========================================
+6. INVENTORY
+========================================
+inventory_id (PK)
+product_id (FK)
+quantity_available
+reorder_level
+last_updated
+
+========================================
+7. ORDERS
+========================================
+order_id (PK)
+customer_id (FK)
+order_date
+order_status
+total_amount
+shipping_address
+
+========================================
+8. ORDER_ITEMS
+========================================
+order_item_id (PK)
+order_id (FK)
+product_id (FK)
+quantity
+unit_price
+subtotal
+
+========================================
+9. PAYMENTS
+========================================
+payment_id (PK)
+order_id (FK)
+payment_date
+payment_method
+payment_status
+amount
+
+========================================
+10. SHIPMENTS
+========================================
+shipment_id (PK)
+order_id (FK)
+tracking_number
+courier_name
+shipment_date
+delivery_date
+shipment_status
+
+========================================
+11. STOCK_TRANSACTIONS
+========================================
+transaction_id (PK)
+product_id (FK)
+transaction_type
+quantity
+transaction_date
+remarks

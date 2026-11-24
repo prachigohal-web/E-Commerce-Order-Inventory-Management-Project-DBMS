@@ -1,0 +1,29 @@
+E-COMMERCE ORDER & INVENTORY MANAGEMENT SYSTEM
+
+PHASE 4: SECURITY, ACCESS CONTROL & TESTING
+
+1. ROLE-BASED ACCESS CONTROL (RBAC)
+- Created Admin, Manager and Customer roles.
+- Created separate MySQL users for each role.
+- Assigned permissions according to responsibilities.
+- Admin has full database privileges.
+- Manager has read and selected write permissions.
+- Customer has read-only access to categories, products and inventory.
+
+2. TRANSACTION MANAGEMENT
+- Tested START TRANSACTION.
+- Tested ROLLBACK to restore previous inventory quantity.
+- Tested COMMIT to permanently save inventory updates.
+- Recorded stock changes in stock_transactions.
+
+3. VALIDATION AND TESTING
+- Valid customer insertion tested.
+- Valid order item insertion tested.
+- Zero quantity rejected by trigger.
+- Negative quantity rejected by trigger.
+- Zero unit price rejected by trigger.
+- Duplicate customer email rejected.
+- Inventory boundary test completed.
+
+4. CONCLUSION
+Phase 4 successfully implemented role-based access control, transaction management and database validation. Valid, invalid and boundary test cases were performed to check database reliability and data integrity.

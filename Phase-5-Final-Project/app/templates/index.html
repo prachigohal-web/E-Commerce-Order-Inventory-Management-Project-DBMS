@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>ShopAdmin</h2>
+    <p class="sidebar-subtitle">Management System</p>
+
+    <nav>
+    <a href="/" class="active">Dashboard</a>
+    <a href="{{ url_for('products') }}">Products</a>
+    <a href="{{ url_for('inventory') }}">Inventory</a>
+    <a href="{{ url_for('orders') }}">Orders</a>
+    <a href="{{ url_for('customers') }}">Customers</a>
+    <a href="{{ url_for('revenue') }}">Revenue & Payments</a>
+</nav>
+
+
+    <div class="sidebar-footer">
+        E-Commerce Management
+    </div>
+</div>
+
+<div class="main-content">
+
+    <header>
+        <div>
+            <h1>Dashboard Overview</h1>
+            <p>Welcome to your E-Commerce Management System</p>
+        </div>
+        <div class="admin-profile">
+            <span>Administrator</span>
+            <div class="avatar">A</div>
+        </div>
+    </header>
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon purple">P</div>
+            <p>Total Products</p>
+            <h2>{{ total_products }}</h2>
+            <small>Products registered</small>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon blue">C</div>
+            <p>Total Customers</p>
+            <h2>{{ total_customers }}</h2>
+            <small>Registered customers</small>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon orange">O</div>
+            <p>Total Orders</p>
+            <h2>{{ total_orders }}</h2>
+            <small>Orders received</small>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon green">₹</div>
+            <p>Total Revenue</p>
+            <h2>₹{{ "%.2f"|format(total_revenue) }}</h2>
+            <small>Successful payments</small>
+        </div>
+
+    </section>
+
+    <section class="alert-card">
+        <div>
+            <h3>Inventory Alert</h3>
+            <p>Products that need stock replenishment</p>
+        </div>
+        <div class="alert-count">
+            {{ low_stock }} Low Stock Items
+        </div>
+    </section>
+
+    <section class="table-section">
+        <div class="section-heading">
+            <div>
+                <h2>Recent Orders</h2>
+                <p>Latest customer orders</p>
+            </div>
+            <span class="table-label">Latest 5 Orders</span>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Order Date</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for order in recent_orders %}
+                    <tr>
+                        <td>#{{ order.order_id }}</td>
+                        <td>{{ order.customer_name }}</td>
+                        <td>{{ order.order_date }}</td>
+                        <td>
+                            <span class="status {{ order.order_status|lower }}">
+                                {{ order.order_status }}
+                            </span>
+                        </td>
+                        <td>₹{{ "%.2f"|format(order.total_amount) }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="empty-message">
+                            No orders available yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer>
+        E-Commerce Order & Inventory Management System
+    </footer>
+
+</div>
+
+</body>
+</html>

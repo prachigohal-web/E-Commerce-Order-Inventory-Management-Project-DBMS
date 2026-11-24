@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>ShopAdmin</h2>
+    <p class="sidebar-subtitle">Management System</p>
+    <nav>
+        <a href="{{ url_for('home') }}">Dashboard</a>
+        <a href="{{ url_for('products') }}" class="active">Products</a>
+        <a href="{{ url_for('customers') }}">Customers</a>
+        <a href="{{ url_for('orders') }}">Orders</a>
+        <a href="{{ url_for('revenue') }}">Revenue & Payments</a>
+    </nav>
+    <div class="sidebar-footer">E-Commerce Management</div>
+</div>
+
+<div class="main-content" style="max-width:850px;">
+
+    <header>
+        <div>
+            <h1>{{ 'Edit Product' if product else 'Add New Product' }}</h1>
+            <p>Enter product information below</p>
+        </div>
+    </header>
+
+    <section class="table-section">
+
+        <form method="POST">
+
+            <label>Category ID</label>
+            <input type="number" name="category_id"
+                   value="{{ product.category_id if product else '' }}"
+                   required min="1">
+
+            <label>Product Name</label>
+            <input type="text" name="product_name"
+                   value="{{ product.product_name if product else '' }}"
+                   required maxlength="150">
+
+            <label>Description</label>
+            <textarea name="description" rows="4">{{ product.description if product else '' }}</textarea>
+
+            <label>Price (₹)</label>
+            <input type="number" name="price" step="0.01"
+                   value="{{ product.price if product else '' }}"
+                   required min="0">
+
+            <label>SKU</label>
+            <input type="text" name="sku"
+                   value="{{ product.sku if product else '' }}"
+                   required maxlength="50">
+
+            <label>Status</label>
+<select name="status" required>
+    <option value="ACTIVE"
+        {% if not product or product.status == 'ACTIVE' %}selected{% endif %}>
+        ACTIVE
+    </option>
+
+    <option value="INACTIVE"
+        {% if product and product.status == 'INACTIVE' %}selected{% endif %}>
+        INACTIVE
+    </option>
+</select>
+
+            <button type="submit" class="action-btn">
+                {{ 'Update Product' if product else 'Save Product' }}
+            </button>
+
+            <a href="{{ url_for('products') }}" class="back-link">Cancel</a>
+
+        </form>
+
+    </section>
+
+</div>
+
+</body>
+</html>
